@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<body>
+    <div id='game'>
+        <button onclick='makeOne()' width='200' height='30'>Add PacMan</button>
+        <button onclick='update()' width='200' height='30'>Start Game</button>
+    </div>
+</body>
+<script>
+    var PacArr = [];
+    var PacID = 0;
+    function makeOne(){
+        PacArr.push(makePac());
+    }
+    
+    function makePac() {
+        // Timer = Timer / 2;
+        // console.log(Timer);
+        // returns an object with random values scaled {x: 33, y: 21}
+        // let velocity = setToRandom(10); // {x:?, y:?}
+        // let position = setToRandom(200);
+
+        // Add image to div id = game
+        let game = document.getElementById('game');
+        var newimg = document.createElement('img');
+        newimg.style.position = 'absolute';
+        newimg.src = 'https://user-images.githubusercontent.com/95542282/163451508-299f04eb-79c3-4c38-bd23-cf3239ecf5e4.png';
+        newimg.alt = "PACMAN";
+        newimg.width = 100;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        // console.log("Width: "+w+", Height: "+ h);
+        // TODO: set position here
+        newimg.posH = (Math.random()*h);
+        newimg.posW = (Math.random()*w);
+        newimg.style.top = newimg.posH;
+        newimg.style.left = newimg.posW;
+        
+        newimg.VelocityH = Math.random()*10;
+        newimg.VelocityW = Math.random()*10;
+        // console.log("Velocity is: " + newimg.VelocityH + " for: pacmen: " + PacID);
+        // TODO add new Child image to game
+        game.appendChild(newimg);
+        PacID = PacID + 1;
+        // game.appendChild(/* TODO: add parameter */);
+        // return details in an object
+        // console.log(PacArr);
+        MakeWork();
+        return newimg;
+        
+        }
+        var Timer = 1;
+        var counter = 0;
+        function MovePac(){
+            // setTimeout(()=>{
+                // console.log("Stage 1")
+                if(counter < PacArr.length){
+                    PacArr[counter].style.top = String(PacArr[counter].posH)+"px";
+                    // console.log(newimg.VelocityH + newimg.posH);
+                    PacArr[counter].posH = PacArr[counter].VelocityH + PacArr[counter].posH;
+                    PacArr[counter].posW = PacArr[counter].VelocityW + PacArr[counter].posW;
+                    PacArr[counter].style.left = String(PacArr[counter].posW)+"px";
+                    game.appendChild(PacArr[counter])
+                    // console.log("Stage 2");
+                    // console.log("PosH =" + PacArr[counter].posH)
+                    if(PacArr[counter].posH>window.innerHeight){
+                        // console.log("To large!");
+                        PacArr[counter].VelocityH = PacArr[counter].VelocityH * -1
+                        
+                    }
+                    if(PacArr[counter].posH<0){
+                        // console.log("To large!");
+                        PacArr[counter].VelocityH = PacArr[counter].VelocityH * -1
+                        
+                    }
+
+                    if(PacArr[counter].posW>window.innerWidth){
+                        // console.log("To large!");
+                        PacArr[counter].VelocityW = PacArr[counter].VelocityW * -1
+                        
+                    }
+                    if(PacArr[counter].posW<0){
+                        // console.log("To large!");
+                        PacArr[counter].VelocityW = PacArr[counter].VelocityW * -1
+                        
+                    }
+                    
+                    counter = counter + 1;
+                }else{
+                    counter = 0;
+                }
+            
+            // },Timer)
+            return;
+        }
+        
+        function MakeWork(){
+            setTimeout(() => {
+                MovePac();
+                MakeWork();
+            }, 10);
+        }
+        
+</script>
